@@ -1,0 +1,7 @@
+langchain-google-genai
+langchain-openai
+langchain-anthropic
+langchain
+markdown2
+streamlit
+pdfkit
