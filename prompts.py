@@ -3,35 +3,6 @@ Prompt templates for the DevNotes-AI application.
 """
 
 from langchain_core.prompts import PromptTemplate
-from langchain.output_parsers import StructuredOutputParser, ResponseSchema
-
-# Response schemas for structured output
-response_schemas = [
-    ResponseSchema(name="topic_name", description="Short, clear topic title for the code file (max 6 words)."),
-    ResponseSchema(name="confidence", description="Confidence level in topic detection (0-100).")
-]
-
-json_parser = StructuredOutputParser.from_response_schemas(response_schemas)
-
-# Topic detection template
-topic_template = PromptTemplate(
-    template="""
-You are an expert programming instructor.
-Your job is to identify a short and clear topic title (max 6 words) that best describes the main concept of the given code file.
-
-Example topic_name outputs:
-- "For Loops in Python"
-- "Functions and Parameters"
-- "React Props and State"
-
-{format_instructions}
-
-Code:
-{file}
-""",
-    input_variables=["file"],
-    partial_variables={'format_instructions': json_parser.get_format_instructions()}
-)
 
 # Notes generation template
 notes_template = PromptTemplate(

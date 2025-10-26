@@ -6,7 +6,7 @@ import os
 from langchain_core.output_parsers import StrOutputParser
 import markdown2
 import re
-from prompts import topic_template, notes_template, json_parser
+from prompts import notes_template
 
 def get_ai_model(provider, model_name, api_key):
     """Get AI model based on provider, model name, and API key."""
@@ -20,15 +20,6 @@ def get_ai_model(provider, model_name, api_key):
         raise ValueError(f"Unsupported provider: {provider}")
 
 parser = StrOutputParser()
-
-def get_topic_name(file_content, ai_model):
-    """Extract topic name from file content using AI."""
-    topic_chain = topic_template | ai_model | json_parser
-    result = topic_chain.invoke({"file": file_content})
-    # Handle both dict and string responses
-    if isinstance(result, dict):
-        return result.get("topic_name", "Unknown Topic")
-    return str(result).strip()
 
 def generate_detailed_notes(main_title, previous_topics, topic_name, suggestion, file_content, ai_model):
     """Generate detailed notes for a given file content."""
